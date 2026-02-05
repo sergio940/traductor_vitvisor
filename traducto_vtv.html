@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Traductor PRO — Vitvisor</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#0b0f2b;
+    color:#fff;
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    min-height:100vh;
+    padding-top:30px;
+}
+
+.container{
+    background:#1b283a;
+    padding:2rem;
+    border-radius:14px;
+    width:100%;
+    max-width:720px;
+    box-shadow:0 0 50px rgba(0,0,0,.7);
+}
+
+h1{
+    text-align:center;
+    color:#FFA500;
+    margin-bottom:1rem;
+}
+
+textarea{
+    width:100%;
+    min-height:150px;
+    border-radius:10px;
+    border:none;
+    padding:1rem;
+    font-size:1rem;
+    resize:none;
+    margin-bottom:1rem;
+}
+
+.controls{
+    display:flex;
+    gap:.5rem;
+    margin-bottom:1rem;
+    flex-wrap:wrap;
+}
+
+input{
+    padding:.3rem .7rem; /* menos padding vertical */
+    border-radius:8px;
+    border:none;
+    font-weight:bold;
+    flex:1;
+    height:35px; /* altura más compacta */
+    font-size:0.9rem;
+}
+
+#status{
+    text-align:center;
+    font-weight:bold;
+    color:#FFA500;
+    margin:1rem 0;
+    display:none;
+}
+
+#result{
+    background:rgba(255,255,255,.1);
+    padding:1rem;
+    border-radius:10px;
+    min-height:120px;
+    white-space:pre-wrap;
+    font-size:1rem;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>🌐 Traductor PRO</h1>
+
+    <textarea id="inputText" placeholder="Escribe aquí..."></textarea>
+
+    <div class="controls">
+        <input list="langs" id="fromLang" placeholder="Idioma de origen (auto)">
+        <input list="langs" id="toLang" placeholder="Idioma de destino">
+        <datalist id="langs">
+            <option value="Auto detectar" data-code="auto">
+            <option value="Afrikáans" data-code="af">
+            <option value="Albanés" data-code="sq">
+            <option value="Amárico" data-code="am">
+            <option value="Árabe" data-code="ar">
+            <option value="Armenio" data-code="hy">
+            <option value="Azerbaiyano" data-code="az">
+            <option value="Vasco" data-code="eu">
+            <option value="Bielorruso" data-code="be">
+            <option value="Bengalí" data-code="bn">
+            <option value="Bosnio" data-code="bs">
+            <option value="Búlgaro" data-code="bg">
+            <option value="Catalán" data-code="ca">
+            <option value="Cebuano" data-code="ceb">
+            <option value="Chichewa" data-code="ny">
+            <option value="Chino Simplificado" data-code="zh-CN">
+            <option value="Chino Tradicional" data-code="zh-TW">
+            <option value="Córcega" data-code="co">
+            <option value="Croata" data-code="hr">
+            <option value="Checo" data-code="cs">
+            <option value="Danés" data-code="da">
+            <option value="Neerlandés" data-code="nl">
+            <option value="Inglés" data-code="en">
+            <option value="Esperanto" data-code="eo">
+            <option value="Estonio" data-code="et">
+            <option value="Filipino" data-code="tl">
+            <option value="Finés" data-code="fi">
+            <option value="Francés" data-code="fr">
+            <option value="Frisón" data-code="fy">
+            <option value="Gallego" data-code="gl">
+            <option value="Georgiano" data-code="ka">
+            <option value="Alemán" data-code="de">
+            <option value="Griego" data-code="el">
+            <option value="Gujarati" data-code="gu">
+            <option value="Haitiano" data-code="ht">
+            <option value="Hausa" data-code="ha">
+            <option value="Hawaiano" data-code="haw">
+            <option value="Hebreo" data-code="he">
+            <option value="Hindi" data-code="hi">
+            <option value="Hmong" data-code="hmn">
+            <option value="Húngaro" data-code="hu">
+            <option value="Islandés" data-code="is">
+            <option value="Igbo" data-code="ig">
+            <option value="Indonesio" data-code="id">
+            <option value="Irlandés" data-code="ga">
+            <option value="Italiano" data-code="it">
+            <option value="Japonés" data-code="ja">
+            <option value="Javanés" data-code="jw">
+            <option value="Kannada" data-code="kn">
+            <option value="Kazajo" data-code="kk">
+            <option value="Jemer" data-code="km">
+            <option value="Kinyarwanda" data-code="rw">
+            <option value="Coreano" data-code="ko">
+            <option value="Kurdo (Kurmanji)" data-code="ku">
+            <option value="Kirguís" data-code="ky">
+            <option value="Lao" data-code="lo">
+            <option value="Latín" data-code="la">
+            <option value="Letón" data-code="lv">
+            <option value="Lituano" data-code="lt">
+            <option value="Luxemburgués" data-code="lb">
+            <option value="Macedonio" data-code="mk">
+            <option value="Malgache" data-code="mg">
+            <option value="Malayo" data-code="ms">
+            <option value="Malabar" data-code="ml">
+            <option value="Maltés" data-code="mt">
+            <option value="Maorí" data-code="mi">
+            <option value="Maratí" data-code="mr">
+            <option value="Mongol" data-code="mn">
+            <option value="Birmano" data-code="my">
+            <option value="Nepalí" data-code="ne">
+            <option value="Noruego" data-code="no">
+            <option value="Odia" data-code="or">
+            <option value="Pashto" data-code="ps">
+            <option value="Persa" data-code="fa">
+            <option value="Polaco" data-code="pl">
+            <option value="Portugués" data-code="pt">
+            <option value="Panyabí" data-code="pa">
+            <option value="Rumano" data-code="ro">
+            <option value="Ruso" data-code="ru">
+            <option value="Samoano" data-code="sm">
+            <option value="Gaélico escocés" data-code="gd">
+            <option value="Serbio" data-code="sr">
+            <option value="Sesotho" data-code="st">
+            <option value="Shona" data-code="sn">
+            <option value="Sindhi" data-code="sd">
+            <option value="Cingalés" data-code="si">
+            <option value="Eslovaco" data-code="sk">
+            <option value="Esloveno" data-code="sl">
+            <option value="Somalí" data-code="so">
+            <option value="Español" data-code="es">
+            <option value="Sundanés" data-code="su">
+            <option value="Swahili" data-code="sw">
+            <option value="Sueco" data-code="sv">
+            <option value="Tayiko" data-code="tg">
+            <option value="Tamil" data-code="ta">
+            <option value="Tártaro" data-code="tt">
+            <option value="Telugu" data-code="te">
+            <option value="Tailandés" data-code="th">
+            <option value="Turco" data-code="tr">
+            <option value="Turcomano" data-code="tk">
+            <option value="Ucraniano" data-code="uk">
+            <option value="Urdu" data-code="ur">
+            <option value="Uigur" data-code="ug">
+            <option value="Uzbeco" data-code="uz">
+            <option value="Vietnamita" data-code="vi">
+            <option value="Galés" data-code="cy">
+            <option value="Xhosa" data-code="xh">
+            <option value="Yídish" data-code="yi">
+            <option value="Yoruba" data-code="yo">
+            <option value="Zulú" data-code="zu">
+        </datalist>
+    </div>
+
+    <div id="status">🌌 Traduciendo…</div>
+    <div id="result"></div>
+</div>
+
+<script>
+// Función para quitar tildes
+function normalize(str){
+    return str.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+}
+
+// Devuelve el código del idioma a partir del valor del input
+function getLangCode(name){
+    const norm = normalize(name);
+    const opt = document.querySelectorAll('#langs option');
+    for(let o of opt){
+        if(normalize(o.value) === norm) return o.dataset.code || 'auto';
+    }
+    return 'auto';
+}
+
+const inputText = document.getElementById('inputText');
+const fromInput = document.getElementById('fromLang');
+const toInput = document.getElementById('toLang');
+const status = document.getElementById('status');
+const result = document.getElementById('result');
+
+let timer;
+
+// Traducción en tiempo real
+inputText.addEventListener('input', ()=>{ clearTimeout(timer); timer=setTimeout(traducir, 500); });
+fromInput.addEventListener('input', traducir);
+toInput.addEventListener('input', traducir);
+
+async function traducir(){
+    const text = inputText.value.trim();
+    if(!text){ result.innerText=''; status.style.display='none'; return; }
+
+    status.style.display='block';
+    const from = getLangCode(fromInput.value);
+    const to = getLangCode(toInput.value) || 'es';
+
+    try{
+        const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${from}&tl=${to}&dt=t&q=${encodeURIComponent(text)}`;
+        const res = await fetch(url);
+        const data = await res.json();
+        const translated = data[0].map(i=>i[0]).join('');
+        result.innerText = translated || 'No se pudo traducir.';
+    }catch{
+        result.innerText = 'Error al traducir.';
+    }
+
+    status.style.display='none';
+}
+</script>
+
+</body>
+</html>
